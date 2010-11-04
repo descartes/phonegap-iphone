@@ -1,0 +1,49 @@
+<!doctype html>
+<html>
+<head>
+<meta name="viewport" content="initial-scale=1.0, user-scalable=no, width=device-width" />
+<title>PhoneGapFun</title>
+<script src="phonegap.js" type="text/javascript" charset="utf-8"></script>
+
+<style type="text/css">
+body {font-family: Verdana; font-size: 10pt;}
+</style>
+
+<script type="text/javascript" charset="utf-8">
+
+function onBodyLoad() {
+	document.addEventListener("deviceready",onDeviceReady,false);
+}
+
+function onDeviceReady() {
+	//
+} // function onDeviceReady
+
+
+function getAllContacts() {
+	navigator.contacts.getAllContacts(onGetAllContacts,null,null);
+}
+
+function onGetAllContacts(results) {
+	printIt(results);
+}
+
+function printIt(anObject) {
+	for (x in anObject) {
+		if (typeof anObject[x] == 'object') {
+			document.writeln("*"+ x + "*:<br />")
+			printIt(anObject[x]);
+		} else document.writeln(x + " = " + anObject[x] + "<br />");
+	}
+}
+
+</script>
+
+</head>
+
+<body onLoad="onBodyLoad()">
+Two things: Return the organizationName from the AddressBook. And escape any ' in the addresses. OCABMutableMultiValue is processed by SBJsonWriter which does escape " amongst other characters but not '  Put in a contact with an organization/company name and a line in the address like "87 Queen's Street", click the button and it will process the returned data correctly which will also include the organization name. Previously it would choke on the data at the key/value when a value looks like '87 Queen's Street'.
+<br /><button onClick="getAllContacts();">Get all</button>&nbsp;
+
+</body>
+</html>

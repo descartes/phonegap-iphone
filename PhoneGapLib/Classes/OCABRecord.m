@@ -40,6 +40,10 @@
 	return [(id)ABRecordCopyCompositeName([self ABRecordRef]) autorelease];		
 }
 
+- (NSString*) organizationName
+{
+	return [(id)ABRecordCopyValue([self ABRecordRef], kABPersonOrganizationProperty) autorelease];		
+}
 
 
 - (BOOL) setPhoneNumber:(NSString*)phoneNumber withLabel:(NSString*)label
@@ -109,6 +113,7 @@
 {
 	NSString* firstName = [[self firstName] stringByReplacingOccurrencesOfString:@"'" withString:@"\\'"];
 	NSString* lastName = [[self lastName] stringByReplacingOccurrencesOfString:@"'" withString:@"\\'"];
+	NSString* organizationName = [[self organizationName] stringByReplacingOccurrencesOfString:@"'" withString:@"\\'"];
 	NSString* emptyString = @"";
       NSString* name = @"";
     if (firstName != nil && lastName != nil )
@@ -120,12 +125,14 @@
       {
         name = [NSString stringWithFormat:@"%@",firstName !=nil ? firstName: lastName];
       }
+
 	
-	return [[[NSString alloc] initWithFormat:@"{ recordID: %d, name:'%@', firstName:'%@', lastName: '%@', phoneNumbers:%@, emails: %@, address:%@}",
+	return [[[NSString alloc] initWithFormat:@"{ recordID: %d, name:'%@', firstName:'%@', lastName: '%@', organizationName: '%@', phoneNumbers:%@, emails: %@, address:%@}",
            [self recordID],
 			name,
             firstName == nil? emptyString : firstName,
             lastName == nil? emptyString : lastName,
+			organizationName == nil? emptyString : organizationName,
             [[self phoneNumbers] JSONValue],
 			[[self emails] JSONValue],
             [[self addresses] JSONValue]

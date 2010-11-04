@@ -21,6 +21,7 @@
 - (NSString*) firstName;
 - (NSString*) lastName;
 - (NSString*) compositeName;
+- (NSString*) organizationName;
 - (BOOL) setPhoneNumber:(NSString*)phoneNumber withLabel:(NSString*)label;
 
 - (OCABMutableMultiValue*) phoneNumbers;

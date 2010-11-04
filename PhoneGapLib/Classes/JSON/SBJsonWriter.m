@@ -186,7 +186,7 @@
     static NSMutableCharacterSet *kEscapeChars;
     if( ! kEscapeChars ) {
         kEscapeChars = [[NSMutableCharacterSet characterSetWithRange: NSMakeRange(0,32)] retain];
-        [kEscapeChars addCharactersInString: @"\"\\"];
+        [kEscapeChars addCharactersInString: @"\"\'\\"];
     }
     
     [json appendString:@"\""];
@@ -201,6 +201,7 @@
         for (NSUInteger i = 0; i < length; i++) {
             unichar uc = [fragment characterAtIndex:i];
             switch (uc) {
+            	case  39:   [json appendString:@"\\\'"];       break; //XCode won't let you quote a ' so used the ASCII value
                 case '"':   [json appendString:@"\\\""];       break;
                 case '\\':  [json appendString:@"\\\\"];       break;
                 case '\t':  [json appendString:@"\\t"];        break;
